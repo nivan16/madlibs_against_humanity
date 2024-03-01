@@ -7,6 +7,11 @@ module.exports = function validateMadlibInput(data) {
 
   data.body = validText(data.body) ? data.body : '';
 
+  const regexForBlanks = /(?<=\[).[^\]]*/g; // regular expression denoting all substrings contained in brackets (excluding the brackets)
+  if (!data.body.match(regexForBlanks)) {
+    errors.body = 'Madlib fill-ins are required, use [brackets]!';
+  }
+
   if (!Validator.isLength(data.body, { min: 20 })) {
     errors.body = 'Madlib cant be smaller than 20 characters';
   }
@@ -18,10 +23,6 @@ module.exports = function validateMadlibInput(data) {
   if (Validator.isEmpty(data.title)) {
     errors.body = 'Title is required';
   }
-
-  // if (!data.blanks.length) {
-  //   errors.body = 'Madlib requires blanks';
-  // }
 
   return {
     errors,
