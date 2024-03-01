@@ -15,6 +15,8 @@ const madlibs = require("./routes/api/madlibs")
 const User = require("./models/User");
 const Madlib = require("./models/Madlib")
 
+console.log(process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("frontend/build"));
   app.use(cors());
